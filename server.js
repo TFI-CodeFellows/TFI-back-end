@@ -44,7 +44,7 @@ async function handleGetAllnfts(req, res) {
 }
 async function handleGetUsernfts(req, res) {
   const userEmail = req.user.email;
-  userEmail = 'dcmusic01@gmail.com';
+  // userEmail = 'dcmusic01@gmail.com';
   try {
     const nft = await NFT.find({ email: userEmail });
     console.log('nft: ', nft);
