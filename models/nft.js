@@ -10,7 +10,7 @@ const nftSchema = new Schema({
   imageURL: String,
   description: String,
   price: Number,
-  Ratings: Number,
+  ratings: Number,
   email: String,
 });
 
