@@ -32,7 +32,7 @@ app.get('/nft', async (request, response) => {
   }
 });
 
-app.post('/', upload.single("image"), async (req, res) => {
+app.post('/nft', upload.single("image"), async (req, res) => {
   console.log(req.body.name);
   console.log(req.file);
   console.log("upload");
