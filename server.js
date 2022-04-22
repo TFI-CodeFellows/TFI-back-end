@@ -3,6 +3,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+//upload functionality
+const multer = require('multer');
+const { storage } = require('./cloudinary');
+const upload = multer({ storage });
 // const verifyUser = require('./auth.js');
 const PORT = process.env.PORT || 3002;
 const app = express();
@@ -27,6 +31,13 @@ app.get('/nft', async (request, response) => {
     response.status(400).send("No nft's");
   }
 });
+
+app.post('/', upload.single("image"), async (req, res) => {
+  console.log(req.body.name);
+  console.log(req.file);
+  console.log("upload");
+  res.send("hi");
+})
 
 //Landing page for testing purposes
 app.get('/', (request, response) => {
