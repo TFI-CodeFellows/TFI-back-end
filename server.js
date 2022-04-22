@@ -33,10 +33,16 @@ app.get('/nft', async (request, response) => {
 });
 
 app.post('/nft', upload.single("image"), async (req, res) => {
-  console.log(req.body.name);
-  console.log(req.file);
-  console.log("upload");
-  res.send("hi");
+  const nftData = {
+    title: req.body.title,
+    type: req.body.type,
+    imageURL: req.file.path,
+    description: req.body.description,
+    price: req.body.price,
+    ratings: req.body.ratings,
+  }
+  const newNft = await NFT.create(nftData);
+  res.status(204).send('NFT Was successfully minted');
 })
 
 //Landing page for testing purposes
