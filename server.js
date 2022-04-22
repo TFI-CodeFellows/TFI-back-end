@@ -35,7 +35,6 @@ app.delete('/nft/:id', handleDeleteNft);
 async function handleGetAllnfts(req, res) {
   try {
     const nft = await NFT.find();
-    console.log('nft: ', nft);
     res.status(200).send(nft);
   } catch (error) {
     console.error(error);
@@ -43,10 +42,8 @@ async function handleGetAllnfts(req, res) {
   }
 }
 async function handleGetUsernfts(req, res) {
-  const userEmail = req.user.email;
-  // userEmail = 'dcmusic01@gmail.com';
   try {
-    const nft = await NFT.find({ email: userEmail });
+    const nft = await NFT.find({ email: req.user.email });
     console.log('nft: ', nft);
     res.status(200).send(nft);
   } catch (error) {
@@ -69,7 +66,7 @@ async function handleCreateNft(req, res) {
 
 async function handleDeleteNft(request, response, next) {
   try {
-    await NFT.findByIdAndDelete({ _id: request.params.id });
+    await NFT.findByIdAndDelete({ _id: request.params.id, email: req.user.email});
     response.status('200').send('NFT was deleted');
   } catch (error) {
     next(error.message);
