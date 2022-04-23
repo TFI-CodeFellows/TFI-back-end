@@ -26,10 +26,10 @@ db.once('open', function () {
   console.log('Mongoose is connected');
 });
 
-app.use(verifyUser);
 // Paths
-app.get('/nft', handleGetUsernfts);
 app.get('/', handleGetAllnfts);
+app.use(verifyUser);
+app.get('/nft', handleGetUsernfts);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
 
