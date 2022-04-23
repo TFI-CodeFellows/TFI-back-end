@@ -26,6 +26,7 @@ db.once('open', function () {
   console.log('Mongoose is connected');
 });
 
+app.use(verifyUser);
 // Paths
 app.get('/nft', handleGetUsernfts);
 app.get('/', handleGetAllnfts);
@@ -54,6 +55,7 @@ async function handleGetUsernfts(req, res) {
   }
 }
 async function handleCreateNft(req, res) {
+  console.log(req);
   try {
     const nftData = {
       title: req.body.title,
@@ -102,7 +104,6 @@ app.get('/', (request, response) => {
 });
 
 //Auth0
-app.use(verifyUser);
 
 //Error Handling
 app.use((error, req, res, next) => {
