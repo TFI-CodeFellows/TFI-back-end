@@ -25,13 +25,13 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('Mongoose is connected');
 });
-app.use(verifyUser);
 
 // Paths
 app.get('/nft', handleGetUsernfts);
 app.get('/', handleGetAllnfts);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
+
 
 // functions for Paths
 async function handleGetAllnfts(req, res) {
@@ -101,7 +101,8 @@ app.get('/', (request, response) => {
   response.send('We Are Working!!!');
 });
 
-
+//Auth0
+app.use(verifyUser);
 
 //Error Handling
 app.use((error, req, res, next) => {
