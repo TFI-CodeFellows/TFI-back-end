@@ -47,7 +47,6 @@ async function handleGetAllnfts(req, res) {
 async function handleGetUsernfts(req, res) {
   try {
     const nft = await NFT.find({ email: req.user.email });
-    console.log('nft: ', nft);
     res.status(200).send(nft);
   } catch (error) {
     console.error(error);
@@ -55,7 +54,6 @@ async function handleGetUsernfts(req, res) {
   }
 }
 async function handleCreateNft(req, res) {
-  console.log(req);
   try {
     const nftData = {
       title: req.body.title,
@@ -73,7 +71,6 @@ async function handleCreateNft(req, res) {
     res.status(400).send('Error')
   }
 }
-console.log('plEASEEE WORK')    
 
 async function handleDeleteNft(request, response, next) {
   try {
