@@ -28,6 +28,7 @@ db.once('open', function () {
 
 // Paths
 app.get('/', handleGetAllnfts);
+app.use(verifyUser);
 app.get('/nft', handleGetUsernfts);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
@@ -83,20 +84,6 @@ async function handleDeleteNft(request, response, next) {
   }
 }
 
-//STRETCH GOAL
-// app.patch('/nft/:id', handlePatchnfts);
-// app.patch('/nft/:id', async (request, response, next) => {
-//   try {
-//     const result = await NFT.findOneAndUpdate(
-//       { _id: request.params.id, email: request.user.email },
-//       request.body
-//     );
-//     response.status('200').send(result);
-//   } catch (error) {
-//     next(error.message);
-//   }
-// });
-
 //Landing page for testing purposes
 app.get('/', (request, response) => {
   response.send('We Are Working!!!');
@@ -106,8 +93,5 @@ app.get('/', (request, response) => {
 app.use((error, req, res, next) => {
   res.status(500).send(error.message);
 });
-
-//Auth0
-app.use(verifyUser);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
