@@ -72,7 +72,7 @@ async function handleCreateNft(req, res) {
     res.status(400).send('Error')
   }
 }
-    
+console.log('plEASEEE WORK')    
 
 async function handleDeleteNft(request, response, next) {
   try {
