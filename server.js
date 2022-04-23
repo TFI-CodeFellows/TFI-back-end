@@ -8,8 +8,9 @@ const cors = require('cors');
 const multer = require('multer');
 const { storage } = require('./cloudinary');
 const upload = multer({ storage });
-
+//Auth0
 const verifyUser = require('./auth.js');
+
 const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('Mongoose is connected');
 });
+app.use(verifyUser);
 
 // Paths
 app.get('/nft', handleGetUsernfts);
@@ -52,17 +54,24 @@ async function handleGetUsernfts(req, res) {
   }
 }
 async function handleCreateNft(req, res) {
-  const nftData = {
-    title: req.body.title,
-    type: req.body.type,
-    imageURL: req.file.path,
-    description: req.body.description,
-    price: req.body.price,
-    ratings: req.body.ratings,
-  };
-  const newNft = await NFT.create(nftData);
-  res.status(204).send('NFT Was successfully minted');
+  try {
+    const nftData = {
+      title: req.body.title,
+      type: req.body.type,
+      imageURL: req.file.path,
+      description: req.body.description,
+      price: req.body.price,
+      ratings: req.body.ratings,
+      email: req.user.email,
+    };
+    const newNft = await NFT.create(nftData);
+    res.status(204).send('NFT Was successfully minted');
+  }catch(error){
+    console.error(error.message);
+    res.status(400).send('Error')
+  }
 }
+    
 
 async function handleDeleteNft(request, response, next) {
   try {
@@ -92,8 +101,7 @@ app.get('/', (request, response) => {
   response.send('We Are Working!!!');
 });
 
-//Auth0 implementation
-app.use(verifyUser);
+
 
 //Error Handling
 app.use((error, req, res, next) => {
