@@ -28,7 +28,6 @@ db.once('open', function () {
 
 // Paths
 app.get('/', handleGetAllnfts);
-app.use(verifyUser);
 app.get('/nft', handleGetUsernfts);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
@@ -103,11 +102,12 @@ app.get('/', (request, response) => {
   response.send('We Are Working!!!');
 });
 
-//Auth0
-
 //Error Handling
 app.use((error, req, res, next) => {
   res.status(500).send(error.message);
 });
+
+//Auth0
+app.use(verifyUser);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
