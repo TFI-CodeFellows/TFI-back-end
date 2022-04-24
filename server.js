@@ -20,6 +20,7 @@ app.use(express.json());
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL);
 const NFT = require('./models/nft');
+const DEV = require('./models/dev');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -28,13 +29,26 @@ db.once('open', function () {
 
 // Paths
 app.get('/', handleGetAllnfts);
+app.get('/dev', handelgetAllDevs);
 app.use(verifyUser);
 app.get('/nft', handleGetUsernfts);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
 app.put('/nft/:id', handleUpdateNft);
+app.put('/dev/:id', handleUpdateDev);
 
 // functions for Paths
+
+async function handelgetAllDevs(req, res) {
+  try {
+    const dev = await DEV.find();
+    res.status(200).send(dev);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Could not find dev');
+  }
+}
+
 async function handleGetAllnfts(req, res) {
   try {
     const nft = await NFT.find();
@@ -85,12 +99,26 @@ async function handleDeleteNft(request, response, next) {
 }
 
 async function handleUpdateNft(req, res) {
-  const { id } = req.params;
   try {
-    const updateNFT = await NFT.findByIdAndUpdate(id, { ...req.body });
+    console.log('updating NFT');
+    const updateNFT = await NFT.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    console.log('updatedNFT');
     res.status(200).send(updateNFT);
   } catch (e) {
     res.status(500).send('servere error');
+  }
+}
+
+async function handleUpdateDev(req, res) {
+  try {
+    const updateDev = await DEV.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).send(updateDev);
+  } catch (e) {
+    res.status(500).send('server error');
   }
 }
 
