@@ -32,7 +32,7 @@ app.use(verifyUser);
 app.get('/nft', handleGetUsernfts);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
-
+app.put('/nft/:id', handleUpdateNft);
 
 // functions for Paths
 async function handleGetAllnfts(req, res) {
@@ -66,18 +66,31 @@ async function handleCreateNft(req, res) {
     };
     const newNft = await NFT.create(nftData);
     res.status(204).send('NFT Was successfully minted');
-  }catch(error){
+  } catch (error) {
     console.error(error.message);
-    res.status(400).send('Error')
+    res.status(400).send('Error');
   }
 }
 
 async function handleDeleteNft(request, response, next) {
   try {
-    await NFT.findByIdAndDelete({ _id: request.params.id, email: req.user.email});
+    await NFT.findByIdAndDelete({
+      _id: request.params.id,
+      email: req.user.email,
+    });
     response.status('200').send('NFT was deleted');
   } catch (error) {
     next(error.message);
+  }
+}
+
+async function handleUpdateNft(req, res) {
+  const { id } = req.params;
+  try {
+    const updateNFT = await NFT.findByIdAndUpdate(id, { ...req.body });
+    res.status(200).send(updateNFT);
+  } catch (e) {
+    res.status(500).send('servere error');
   }
 }
 
