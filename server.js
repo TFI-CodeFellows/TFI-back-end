@@ -30,6 +30,7 @@ db.once('open', function () {
 app.get('/', handleGetAllnfts);
 app.use(verifyUser);
 app.get('/nft', handleGetUsernfts);
+app.put('/nft/:id',handleUpdateNft);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
 
@@ -71,12 +72,19 @@ async function handleCreateNft(req, res) {
     res.status(400).send('Error')
   }
 }
-
 async function handleDeleteNft(request, response, next) {
   try {
     await NFT.findByIdAndDelete({ _id: request.params.id, email: req.user.email});
     response.status('200').send('NFT was deleted');
   } catch (error) {
+    next(error.message);
+  }
+}
+async function handleUpdateNft(request, response, next){
+  try{
+    const result = await NFT.findOneAndUpdate({_id: request.params.id, email: request.user.email}, request.body);
+    response.status('200').send(result);
+  }catch(error) {
     next(error.message);
   }
 }
