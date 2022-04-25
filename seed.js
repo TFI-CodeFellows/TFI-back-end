@@ -60,7 +60,28 @@ const seed = async () => {
     description: "Hugo...flossin'",
     price: 789,
     Ratings: 4.3,
-    email: 'dcmusic01@gmail.com',
+    email: 'jaypesc@gmail.com',
+  });
+  await nft.create({
+    title: 'Marta',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
+    description: 'Marta, Nuff said',
+    price: 7,
+    Ratings: 4.8,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Hugo',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
+    description: "Hugo...flossin'",
+    price: 789,
+    Ratings: 4.3,
+    email: 'jaypesc@gmail.com',
   });
 
   await nft.create({
@@ -71,7 +92,95 @@ const seed = async () => {
     description: 'Marta, Nuff said',
     price: 7,
     Ratings: 4.8,
-    email: 'dcmusic01@gmail.com',
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Hugo',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
+    description: "Hugo...flossin'",
+    price: 789,
+    Ratings: 4.3,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Marta',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
+    description: 'Marta, Nuff said',
+    price: 7,
+    Ratings: 4.8,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Hugo',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
+    description: "Hugo...flossin'",
+    price: 789,
+    Ratings: 4.3,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Marta',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
+    description: 'Marta, Nuff said',
+    price: 7,
+    Ratings: 4.8,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Hugo',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
+    description: "Hugo...flossin'",
+    price: 789,
+    Ratings: 4.3,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Marta',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
+    description: 'Marta, Nuff said',
+    price: 7,
+    Ratings: 4.8,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Hugo',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
+    description: "Hugo...flossin'",
+    price: 789,
+    Ratings: 4.3,
+    email: 'jaypesc@gmail.com',
+  });
+
+  await nft.create({
+    title: 'Marta',
+    type: 'portrait',
+    imageURL:
+      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
+    description: 'Marta, Nuff said',
+    price: 7,
+    Ratings: 4.8,
+    email: 'jaypesc@gmail.com',
   });
   console.log('Seeded database!');
 
