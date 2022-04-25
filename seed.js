@@ -61,7 +61,6 @@ const seed = async () => {
     Ratings: 4.3,
     email: 'jaypesc@gmail.com',
   });
-
   await nft.create({
     title: 'Marta',
     type: 'portrait',

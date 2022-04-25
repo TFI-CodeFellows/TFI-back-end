@@ -31,21 +31,21 @@ db.once('open', function () {
 // Paths
 app.get('/', handleGetAllnfts);
 app.get('/dev', handelgetAllDevs);
+// Do not move line 35 <*>
 app.use(verifyUser);
 app.get('/nft', handleGetUsernfts);
+app.put('/nft/:id',handleUpdateNft);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
 app.put('/nft/:id', handleUpdateNft);
 app.put('/dev/:id', handleUpdateDev);
 
 // Crypto Path
-
 app.get('/crypto', handleGetUserCrypto);
 app.post('/crypto', handleCreateCrypto);
 app.delete('/crypto/:id', handleDeleteCrypto);
 
 // functions for NFT
-
 async function handelgetAllDevs(req, res) {
   try {
     const dev = await DEV.find();
@@ -93,11 +93,11 @@ async function handleCreateNft(req, res) {
   }
 }
 
-
 async function handleDeleteNft(req, res, next) {
   const { id } = req.params;
   console.log("deleting");
   try {
+
     const nft = await NFT.findOne({ _id: id, email: req.user.email })
     console.log("found deleting");
     if (nft) {
@@ -105,6 +105,14 @@ async function handleDeleteNft(req, res, next) {
         .then(() => res.status('200').send('NFT was deleted'));
     }
   } catch (error) {
+    next(error.message);
+  }
+}
+async function handleUpdateNft(req, res, next){
+  try{
+    const result = await NFT.findOneAndUpdate({_id: req.params.id, email: req.user.email}, req.body);
+    res.status('200').send(result);
+  }catch(error) {
     next(error.message);
   }
 }
@@ -123,7 +131,6 @@ async function handleUpdateNft(req, res) {
 }
 
 //Functions for Dev
-
 async function handleUpdateDev(req, res) {
   try {
     const updateDev = await DEV.findByIdAndUpdate(req.params.id, req.body, {
@@ -173,9 +180,18 @@ async function handleDeleteCrypto(req, res) {
   }
 }
 
+async function handleCreateCrypto(req, res) {
+  try {
+    const coins = await Crypto.create({ ...req.body, email: req.user.email });
+    res.status(204).send("coins were succussfully added");
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
 //Landing page for testing purposes
-app.get('/', (request, response) => {
-  response.send('We Are Working!!!');
+app.get('/', (req, res) => {
+  res.send('We Are Working!!!');
 });
 
 app.get('*', (req, res) => {
@@ -183,7 +199,6 @@ app.get('*', (req, res) => {
 })
 
 //Error Handling
-
 app.use((error, req, res, next) => {
   res.status(500).send(error.message);
 });
