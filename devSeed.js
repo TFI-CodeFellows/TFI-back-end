@@ -16,7 +16,7 @@ const seed = async () => {
     email: 'bazelart13@gmail.com@gmail.com',
     github: 'https://github.com/laptopadventure',
     linkedIn: 'https://www.linkedin.com/in/hugo-thompson-laptopadventure/',
-    role: 'Frontend Developer',
+    role: 'Lead Frontend Developer',
   });
 
   await dev.create({
@@ -28,7 +28,7 @@ const seed = async () => {
     email: 'mrtdenneke@gmail.com',
     github: 'https://github.com/denekm',
     linkedIn: 'https://www.linkedin.com/in/marta-deneke/',
-    role: 'Frontend Developer',
+    role: 'Product Owner',
   });
 
   await dev.create({
@@ -40,7 +40,7 @@ const seed = async () => {
     email: 'mrtdenneke@gmail.com',
     github: 'https://github.com/Dcastro99',
     linkedIn: 'https://www.linkedin.com/in/dcastro99/',
-    role: 'Data Analysis',
+    role: 'Lead Data Engineer',
   });
 
   await dev.create({
@@ -50,7 +50,7 @@ const seed = async () => {
     github: 'https://github.com/jjescandor',
     linkedin: 'https://www.linkedin.com/in/jpescandor/',
     email: 'jaypesc@gmail.com',
-    role: 'Porduct Manager',
+    role: 'Project Manager',
   });
 
   await dev.create({
@@ -61,7 +61,7 @@ const seed = async () => {
     github: 'https://github.com/cesardeltoroc',
     linkedIn: 'https://www.linkedin.com/in/cesardeltoroc/',
     email: 'cesardeltoroc@icloud.com',
-    role: 'Backend Developer',
+    role: 'Lead Backend Developer',
   });
 
   mongoose.disconnect();

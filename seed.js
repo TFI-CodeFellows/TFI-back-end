@@ -22,8 +22,7 @@ const seed = async () => {
   await nft.create({
     title: 'Kai',
     type: 'animal',
-    imageURL:
-      'https://res.https://res.cloudinary.com/tfi/image/upload/v1650511898/KAI_jgxnmz_jywepc.jpg.com/tfi/image/upload/v1650511822/Bob_s8nkry.png',
+    imageURL: 'https://res.cloudinary.com/dxg5jg10h/image/upload/v1650823034/idkhscziddeee33dyhqk.png',
     description: 'JJs amazing dog! Kai can code too!',
     price: 2,
     Ratings: 4.7,
