@@ -1,5 +1,6 @@
 'use strict';
 
+// hello Bob's world
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -76,6 +77,7 @@ async function handleUpdateDev(req, res) {
     console.log('Dev is golden');
     res.status('200').send(result);
   } catch (error) {
+    console.log(req.body);
     next(error.message);
   }
 }
