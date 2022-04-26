@@ -1,5 +1,6 @@
 'use strict';
 
+// hello Bob's world
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -33,19 +34,20 @@ app.get('/', handleGetAllnfts);
 app.get('/dev', handelgetAllDevs);
 // Do not move line 35 <*>
 app.use(verifyUser);
+app.get('/userDev', handleGetUserDev);
 app.get('/nft', handleGetUsernfts);
-app.put('/nft/:id',handleUpdateNft);
+app.put('/nft/:id', handleUpdateNft);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
-app.put('/nft/:id', handleUpdateNft);
 app.put('/dev/:id', handleUpdateDev);
+app.put('/nft/:id', handleUpdateNft);
 
 // Crypto Path
 app.get('/crypto', handleGetUserCrypto);
 app.post('/crypto', handleCreateCrypto);
 app.delete('/crypto/:id', handleDeleteCrypto);
 
-// functions for NFT
+//Dev Information
 async function handelgetAllDevs(req, res) {
   try {
     const dev = await DEV.find();
@@ -55,7 +57,32 @@ async function handelgetAllDevs(req, res) {
     res.status(400).send('Could not find dev');
   }
 }
+async function handleGetUserDev(req, res) {
+  try {
+    const dev = await DEV.find({ email: req.user.email });
+    res.status(200).send(dev);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Could not find dev');
+  }
+}
+async function handleUpdateDev(req, res) {
+  console.log('we made it here');
+  console.log(req.body);
+  try {
+    const result = await DEV.findOneAndUpdate(
+      { _id: req.params.id, email: req.user.email },
+      req.body
+    );
+    console.log('Dev is golden');
+    res.status('200').send(result);
+  } catch (error) {
+    console.log(req.body);
+    next(error.message);
+  }
+}
 
+// functions for NFT
 async function handleGetAllnfts(req, res) {
   try {
     const nft = await NFT.find();
@@ -85,6 +112,7 @@ async function handleCreateNft(req, res) {
       ratings: req.body.ratings,
       email: req.user.email,
     };
+    console.log(nftData);
     const newNft = await NFT.create(nftData);
     res.status(204).send('NFT Was successfully minted');
   } catch (error) {
@@ -97,7 +125,6 @@ async function handleDeleteNft(req, res, next) {
   const { id } = req.params;
   console.log("deleting");
   try {
-
     const nft = await NFT.findOne({ _id: id, email: req.user.email })
     console.log("found deleting");
     if (nft) {
@@ -108,37 +135,27 @@ async function handleDeleteNft(req, res, next) {
     next(error.message);
   }
 }
-async function handleUpdateNft(req, res, next){
-  try{
-    const result = await NFT.findOneAndUpdate({_id: req.params.id, email: req.user.email}, req.body);
+
+async function handleUpdateNft(req, res, next) {
+  try {
+    const result = await NFT.findOneAndUpdate(
+      { _id: req.params.id, email: req.user.email },
+      req.body
+    );
     res.status('200').send(result);
-  }catch(error) {
+  } catch (error) {
     next(error.message);
   }
 }
 
 async function handleUpdateNft(req, res) {
   try {
-    console.log('updating NFT');
     const updateNFT = await NFT.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    console.log('updatedNFT');
     res.status(200).send(updateNFT);
   } catch (e) {
     res.status(500).send('servere error');
-  }
-}
-
-//Functions for Dev
-async function handleUpdateDev(req, res) {
-  try {
-    const updateDev = await DEV.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).send(updateDev);
-  } catch (e) {
-    res.status(500).send('server error');
   }
 }
 
@@ -150,7 +167,7 @@ async function handleGetUserCrypto(req, res) {
     console.log(coins);
     res.status(200).send(coins);
   } catch (error) {
-    res.status(400).send("Could not find coins");
+    res.status(400).send('Could not find coins');
   }
 }
 
@@ -173,7 +190,7 @@ async function handleDeleteCrypto(req, res) {
     const coins = await Crypto.find({ _id: id, email: req.user.email });
     if (coins) {
       await Reading.findByIdAndDelete(id);
-      res.status(204).send("coins were succussfully deleted");
+      res.status(204).send('coins were succussfully deleted');
     }
   } catch (error) {
     res.status(400).send(error.message);
@@ -183,7 +200,7 @@ async function handleDeleteCrypto(req, res) {
 async function handleCreateCrypto(req, res) {
   try {
     const coins = await Crypto.create({ ...req.body, email: req.user.email });
-    res.status(204).send("coins were succussfully added");
+    res.status(204).send('coins were succussfully added');
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -195,8 +212,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.send("Page not found");
-})
+  res.send('Page not found');
+});
 
 //Error Handling
 app.use((error, req, res, next) => {
