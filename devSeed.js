@@ -44,16 +44,6 @@ const seed = async () => {
   });
 
   await dev.create({
-    name: 'JJ Escandor',
-    bio: "I'm a Data Scientist with background in software engineering and defense consulting leveraging over a decade of technical and consulting experience. Passionate about using code to optimize efficiency while developing creative, customer-focused solutions.",
-    imageURL: `https://res.cloudinary.com/software-developer/image/upload/v1650823211/hugo_dujg5r.jpg`,
-    github: 'https://github.com/jjescandor',
-    linkedin: 'https://www.linkedin.com/in/jpescandor/',
-    email: 'jaypesc@gmail.com',
-    role: 'Project Manager',
-  });
-
-  await dev.create({
     name: 'Cesar Deltoro',
     bio: `Hello, I'm Cesar Deltoro a Software Engineer based out of Seattle, WA. My journey into tech began in 2020 and I have been able to build applications with other developers throughout the last 2 years. I am always looking to learn new skills to sharpen my technical abilities, and focused on growth with an inclusive company of which I can develop user friendly applications.`,
     imageUrl:
@@ -62,6 +52,16 @@ const seed = async () => {
     linkedIn: 'https://www.linkedin.com/in/cesardeltoroc/',
     email: 'cesardeltoroc@icloud.com',
     role: 'Lead Backend Developer',
+  });
+
+  await dev.create({
+    name: 'JJ Escandor',
+    bio: "I'm a Data Scientist with background in software engineering and defense consulting leveraging over a decade of technical and consulting experience. Passionate about using code to optimize efficiency while developing creative, customer-focused solutions.",
+    imageURL: `https://res.cloudinary.com/dxg5jg10h/image/upload/v1650997546/Screen_Shot_2022-04-26_at_2.25.20_PM_m6nczj.png`,
+    github: 'https://github.com/jjescandor',
+    linkedin: 'https://www.linkedin.com/in/jpescandor/',
+    email: 'jaypesc@gmail.com',
+    role: 'Project Manager',
   });
 
   mongoose.disconnect();
