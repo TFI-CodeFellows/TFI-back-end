@@ -68,7 +68,6 @@ async function handleGetUserDev(req, res) {
 }
 async function handleUpdateDev(req, res) {
   console.log('we made it here');
-  console.log(req.body);
   try {
     const result = await DEV.findOneAndUpdate(
       { _id: req.params.id, email: req.user.email },
@@ -112,7 +111,6 @@ async function handleCreateNft(req, res) {
       ratings: req.body.ratings,
       email: req.user.email,
     };
-    console.log(nftData);
     const newNft = await NFT.create(nftData);
     res.status(204).send('NFT Was successfully minted');
   } catch (error) {
@@ -164,7 +162,6 @@ async function handleUpdateNft(req, res) {
 async function handleGetUserCrypto(req, res) {
   try {
     const coins = await Crypto.find({ email: req.user.email });
-    console.log(coins);
     res.status(200).send(coins);
   } catch (error) {
     res.status(400).send('Could not find coins');
@@ -187,9 +184,11 @@ async function handleCreateCrypto(req, res) {
 async function handleDeleteCrypto(req, res) {
   const { id } = req.params;
   try {
-    const coins = await Crypto.find({ _id: id, email: req.user.email });
-    if (coins) {
-      await Reading.findByIdAndDelete(id);
+    const coin = await Crypto.findOne({ _id: id });
+    console.log(coin)
+    console.log("Found crypto");
+    if (coin) {
+      await Crypto.findByIdAndDelete(id);
       res.status(204).send('coins were succussfully deleted');
     }
   } catch (error) {
