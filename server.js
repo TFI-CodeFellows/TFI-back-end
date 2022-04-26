@@ -33,19 +33,20 @@ app.get('/', handleGetAllnfts);
 app.get('/dev', handelgetAllDevs);
 // Do not move line 35 <*>
 app.use(verifyUser);
+app.get('/userDev', handleGetUserDev)
 app.get('/nft', handleGetUsernfts);
 app.put('/nft/:id',handleUpdateNft);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
-app.put('/nft/:id', handleUpdateNft);
 app.put('/dev/:id', handleUpdateDev);
+app.put('/nft/:id', handleUpdateNft);
 
 // Crypto Path
 app.get('/crypto', handleGetUserCrypto);
 app.post('/crypto', handleCreateCrypto);
 app.delete('/crypto/:id', handleDeleteCrypto);
 
-// functions for NFT
+//Dev Information
 async function handelgetAllDevs(req, res) {
   try {
     const dev = await DEV.find();
@@ -55,7 +56,28 @@ async function handelgetAllDevs(req, res) {
     res.status(400).send('Could not find dev');
   }
 }
+async function handleGetUserDev(req, res) { 
+  try {
+    const dev = await DEV.find({email: req.user.email});
+    res.status(200).send(dev);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Could not find dev');
+  }
+}
+async function handleUpdateDev(req, res) {
+  console.log('we made it here')
+  try {
+    const updateDev = await DEV.findOneAndUpdate({_id: req.params.id, email: req.user.email}, req.body);
+    res.status(200).send(updateDev);
+    console.log('dev updated')
+  } catch (e) {
+    res.status(500).send('server error');
+  }
+}
 
+
+// functions for NFT
 async function handleGetAllnfts(req, res) {
   try {
     const nft = await NFT.find();
@@ -117,28 +139,15 @@ async function handleUpdateNft(req, res, next){
 
 async function handleUpdateNft(req, res) {
   try {
-    console.log('updating NFT');
     const updateNFT = await NFT.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    console.log('updatedNFT');
     res.status(200).send(updateNFT);
   } catch (e) {
     res.status(500).send('servere error');
   }
 }
 
-//Functions for Dev
-async function handleUpdateDev(req, res) {
-  try {
-    const updateDev = await DEV.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).send(updateDev);
-  } catch (e) {
-    res.status(500).send('server error');
-  }
-}
 
 //Functions for Crypto
 
