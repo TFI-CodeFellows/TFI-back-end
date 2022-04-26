@@ -112,6 +112,7 @@ async function handleCreateNft(req, res) {
       ratings: req.body.ratings,
       email: req.user.email,
     };
+    console.log(nftData);
     const newNft = await NFT.create(nftData);
     res.status(204).send('NFT Was successfully minted');
   } catch (error) {
@@ -119,20 +120,22 @@ async function handleCreateNft(req, res) {
     res.status(400).send('Error');
   }
 }
+
 async function handleDeleteNft(req, res, next) {
   const { id } = req.params;
+  console.log("deleting");
   try {
-    const coin = await NFT.findOne({ _id: id });
-    if (coin) {
-      await NFT.findByIdAndDelete({
-        _id: id,
-      });
+    const nft = await NFT.findOne({ _id: id, email: req.user.email })
+    console.log("found deleting");
+    if (nft) {
+      await NFT.findByIdAndDelete({ _id: id })
+        .then(() => res.status('200').send('NFT was deleted'));
     }
-    res.status('200').send('NFT was deleted');
   } catch (error) {
     next(error.message);
   }
 }
+
 async function handleUpdateNft(req, res, next) {
   try {
     const result = await NFT.findOneAndUpdate(
@@ -161,6 +164,7 @@ async function handleUpdateNft(req, res) {
 async function handleGetUserCrypto(req, res) {
   try {
     const coins = await Crypto.find({ email: req.user.email });
+    console.log(coins);
     res.status(200).send(coins);
   } catch (error) {
     res.status(400).send('Could not find coins');
@@ -168,9 +172,13 @@ async function handleGetUserCrypto(req, res) {
 }
 
 async function handleCreateCrypto(req, res) {
+  const { coinName } = req.body
   try {
-    const coins = await Crypto.create({ ...req.body, email: req.user.email });
-    res.status(204).send('coins were succussfully added');
+    const findCoin = await Crypto.findOne({ ...req.body, email: req.user.email });
+    if (!findCoin) {
+      const coin = await Crypto.create({ ...req.body, email: req.user.email });
+    }
+    res.status(204).send("coins were succussfully added");
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -180,7 +188,6 @@ async function handleDeleteCrypto(req, res) {
   const { id } = req.params;
   try {
     const coins = await Crypto.find({ _id: id, email: req.user.email });
-    console.log(coins);
     if (coins) {
       await Reading.findByIdAndDelete(id);
       res.status(204).send('coins were succussfully deleted');
@@ -189,6 +196,7 @@ async function handleDeleteCrypto(req, res) {
     res.status(400).send(error.message);
   }
 }
+
 async function handleCreateCrypto(req, res) {
   try {
     const coins = await Crypto.create({ ...req.body, email: req.user.email });
