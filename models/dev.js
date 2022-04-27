@@ -11,6 +11,7 @@ const devSchema = new Schema({
   linkedIn: String,
   email: String,
   role: String,
+  admin: Boolean,
 });
 
 const DEV = mongoose.model('dev', devSchema);

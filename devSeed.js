@@ -17,6 +17,7 @@ const seed = async () => {
     github: 'https://github.com/laptopadventure',
     linkedIn: 'https://www.linkedin.com/in/hugo-thompson-laptopadventure/',
     role: 'Lead Frontend Developer',
+    admin: true,
   });
 
   await dev.create({
@@ -29,6 +30,7 @@ const seed = async () => {
     github: 'https://github.com/denekm',
     linkedIn: 'https://www.linkedin.com/in/marta-deneke/',
     role: 'Product Owner',
+    admin: true,
   });
 
   await dev.create({
@@ -41,17 +43,18 @@ const seed = async () => {
     github: 'https://github.com/Dcastro99',
     linkedIn: 'https://www.linkedin.com/in/dcastro99/',
     role: 'Lead Data Engineer',
+    admin: true,
   });
 
   await dev.create({
     name: 'Cesar Deltoro',
     bio: `Hello, I'm Cesar Deltoro a Software Engineer based out of Seattle, WA. My journey into tech began in 2020 and I have been able to build applications with other developers throughout the last 2 years. I am always looking to learn new skills to sharpen my technical abilities, and focused on growth with an inclusive company of which I can develop user friendly applications.`,
-    imageUrl:
-      'https://res.cloudinary.com/software-developer/image/upload/v1650823279/IMG_1591_csgc7r.jpg',
+    imageUrl:`https://res.cloudinary.com/software-developer/image/upload/v1650823279/IMG_1591_csgc7r.jpg`,
     github: 'https://github.com/cesardeltoroc',
     linkedIn: 'https://www.linkedin.com/in/cesardeltoroc/',
-    email: 'cesardeltoroc@icloud.com',
+    email: 'cesardeltorojr@gmail.com',
     role: 'Lead Backend Developer',
+    admin: true,
   });
 
   await dev.create({
@@ -62,6 +65,7 @@ const seed = async () => {
     linkedin: 'https://www.linkedin.com/in/jpescandor/',
     email: 'jaypesc@gmail.com',
     role: 'Project Manager',
+    admin: true,
   });
 
   mongoose.disconnect();
