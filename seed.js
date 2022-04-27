@@ -26,7 +26,7 @@ const seed = async () => {
     description: 'JJs amazing dog! Kai can code too!',
     price: 2,
     Ratings: 4.7,
-    email: 'dcmusic01@gmail.com',
+    email: 'jaypesc@gmail.com',
   });
 
   await nft.create({
@@ -48,7 +48,7 @@ const seed = async () => {
     description: "Cesar's dog that helped him through highschool",
     price: 5,
     Ratings: 4.7,
-    email: 'dcmusic01@gmail.com',
+    email: 'cesardeltorojr@gmail.com',
   });
 
   await nft.create({
@@ -59,7 +59,7 @@ const seed = async () => {
     description: "Hugo...flossin'",
     price: 789,
     Ratings: 4.3,
-    email: 'jaypesc@gmail.com',
+    email: 'bazelart13@gmail.com@gmail.com',
   });
   await nft.create({
     title: 'Marta',
@@ -69,120 +69,17 @@ const seed = async () => {
     description: 'Marta, Nuff said',
     price: 7,
     Ratings: 4.8,
-    email: 'jaypesc@gmail.com',
+    email: 'mrtdenneke@gmail.com',
   });
-
   await nft.create({
-    title: 'Hugo',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
-    description: "Hugo...flossin'",
-    price: 789,
-    Ratings: 4.3,
-    email: 'jaypesc@gmail.com',
+    title:"Dastardly Danimus",
+    type:"Animal",
+    imageURL:"https://res.cloudinary.com/dxg5jg10h/image/upload/v1651030599/iuwzcgxfcqkwcnlyr4bj.png",
+    description:"Most evil man west of the mississippi",
+    price:234,
+    ratings:93435,
+    email:"hhtlaptopadventure@gmail.com",
   });
-
-  await nft.create({
-    title: 'Marta',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
-    description: 'Marta, Nuff said',
-    price: 7,
-    Ratings: 4.8,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Hugo',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
-    description: "Hugo...flossin'",
-    price: 789,
-    Ratings: 4.3,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Marta',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
-    description: 'Marta, Nuff said',
-    price: 7,
-    Ratings: 4.8,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Hugo',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
-    description: "Hugo...flossin'",
-    price: 789,
-    Ratings: 4.3,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Marta',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
-    description: 'Marta, Nuff said',
-    price: 7,
-    Ratings: 4.8,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Hugo',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
-    description: "Hugo...flossin'",
-    price: 789,
-    Ratings: 4.3,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Marta',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
-    description: 'Marta, Nuff said',
-    price: 7,
-    Ratings: 4.8,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Hugo',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
-    description: "Hugo...flossin'",
-    price: 789,
-    Ratings: 4.3,
-    email: 'jaypesc@gmail.com',
-  });
-
-  await nft.create({
-    title: 'Marta',
-    type: 'Portrait',
-    imageURL:
-      'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
-    description: 'Marta, Nuff said',
-    price: 7,
-    Ratings: 4.8,
-    email: 'jaypesc@gmail.com',
-  });
-  console.log('Seeded database!');
-
   mongoose.disconnect();
 };
 
