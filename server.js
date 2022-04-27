@@ -31,18 +31,20 @@ db.once('open', function () {
 const NFT = require('./models/nft');
 const WALLET = require('./models/wallet')
 const DEV = require('./models/dev');
-const Crypto = require('./models/crypto');
+const CRYPTO = require('./models/crypto');
 
 // Landing path
 app.get('/', handleGetAllnfts);
 app.get('/dev', handelgetAllDevs);
 
-// Do not move line 36 <*>
+// Do not move line this line below <*>
 app.use(verifyUser);
 
 //Wallet paths
 app.get('/wallet', handleGetUserWallet);
 app.delete('/wallet/:id', handleDeleteUserWallet);
+app.post('/wallet', handlePostWallet);
+
 
 // dev Paths
 app.get('/userDev', handleGetUserDev);
@@ -154,7 +156,7 @@ async function handleUpdateNft(req, res) {
 //Crypto Functions
 async function handleGetUserCrypto(req, res) {
   try {
-    const coins = await Crypto.find({ email: req.user.email });
+    const coins = await CRYPTO.find({ email: req.user.email });
     res.status(200).send(coins);
   } catch (error) {
     res.status(400).send('Could not find coins');
@@ -162,22 +164,21 @@ async function handleGetUserCrypto(req, res) {
 }
 async function handleCreateCrypto(req, res) {
   try {
-    const findCoin = await Crypto.findOne({ ...req.body, email: req.user.email });
+    const findCoin = await CRYPTO.findOne({ ...req.body, email: req.user.email });
     if (!findCoin) {
-      const coin = await Crypto.create({ ...req.body, email: req.user.email });
+      const coin = await CRYPTO.create({ ...req.body, email: req.user.email });
     }
     res.status(204).send("coins were succussfully added");
   } catch (error) {
     res.status(400).send(error.message);
   }
 }
-
 async function handleDeleteCrypto(req, res) {
   const { id } = req.params;
   try {
-    const coin = await Crypto.findOne({ _id: id });
+    const coin = await CRYPTO.findOne({ _id: id });
     if (coin) {
-      await Crypto.findByIdAndDelete(id);
+      await CRYPTO.findByIdAndDelete(id);
       res.status(204).send('coins were succussfully deleted');
     }
   } catch (error) {
@@ -187,7 +188,7 @@ async function handleDeleteCrypto(req, res) {
 
 async function handleCreateCrypto(req, res) {
   try {
-    const coins = await Crypto.create({ ...req.body, email: req.user.email });
+    const coins = await CRYPTO.create({ ...req.body, email: req.user.email });
     res.status(204).send('coins were succussfully added');
   } catch (error) {
     res.status(400).send(error.message);
@@ -197,11 +198,11 @@ async function handleCreateCrypto(req, res) {
 // Functions for Wallet
 async function handleGetUserWallet(req, res) {
   try {
-    const wallet = await WALLET.find({ emai: req.user.email});
+    const wallet = await WALLET.find({ email: req.user.email });
     res.status(200).send(wallet);
   } catch (error) {
     console.error(error);
-    res.status(400).send('Could not find dev');
+    res.status(400).send('Could not find user wallet Information');
   }
 }
 async function handleDeleteUserWallet(req, res) {
@@ -213,21 +214,43 @@ async function handleDeleteUserWallet(req, res) {
     res.status(400).send(error.message);
   }
 }
+async function handlePostWallet(req, res) {
+  try {
+    const findWallet = await WALLET.findOne({ ...req.body, email: req.user.email });
+    if (!findWallet) {
+      const wallet = await WALLET.create({ ...req.body, email: req.user.email });
+    }
+    res.status(204).send('Created item in Wallet');
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+// Get all users
+// app.get('/usersList', function(req, res) {
+//   User.find({}, function(err, users) {
+//     var userMap = {};
+
+//     users.forEach(function(user) {
+//       userMap[user._id] = user;
+//     });
+
+//     res.send(userMap);  
+//   });
+// });
 
 
+  //Landing page for testing purposes
+  app.get('/', (req, res) => {
+    res.send('We Are Working!!!');
+  });
 
-//Landing page for testing purposes
-app.get('/', (req, res) => {
-  res.send('We Are Working!!!');
-});
+  app.get('*', (req, res) => {
+    res.send('Page not found');
+  });
 
-app.get('*', (req, res) => {
-  res.send('Page not found');
-});
+  //Error Handling
+  app.use((error, req, res, next) => {
+    res.status(500).send(error.message);
+  });
 
-//Error Handling
-app.use((error, req, res, next) => {
-  res.status(500).send(error.message);
-});
-
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
+  app.listen(PORT, () => console.log(`listening on ${PORT}`));

@@ -9,7 +9,7 @@ const nft = require('./models/nft');
 const seed = async () => {
   await nft.create({
     title: 'Bob',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650511822/Bob_s8nkry.png',
     description:
@@ -53,7 +53,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Hugo',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
     description: "Hugo...flossin'",
@@ -63,7 +63,7 @@ const seed = async () => {
   });
   await nft.create({
     title: 'Marta',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
     description: 'Marta, Nuff said',
@@ -74,7 +74,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Hugo',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
     description: "Hugo...flossin'",
@@ -85,7 +85,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Marta',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
     description: 'Marta, Nuff said',
@@ -96,7 +96,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Hugo',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
     description: "Hugo...flossin'",
@@ -107,7 +107,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Marta',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
     description: 'Marta, Nuff said',
@@ -118,7 +118,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Hugo',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
     description: "Hugo...flossin'",
@@ -129,7 +129,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Marta',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
     description: 'Marta, Nuff said',
@@ -140,7 +140,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Hugo',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
     description: "Hugo...flossin'",
@@ -151,7 +151,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Marta',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
     description: 'Marta, Nuff said',
@@ -162,7 +162,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Hugo',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514348/Hugo-hoodie_yo8wm6.jpg',
     description: "Hugo...flossin'",
@@ -173,7 +173,7 @@ const seed = async () => {
 
   await nft.create({
     title: 'Marta',
-    type: 'portrait',
+    type: 'Portrait',
     imageURL:
       'https://res.cloudinary.com/tfi/image/upload/v1650514560/B0E6B351-87A7-41DD-9260-9190336990D3_1_201_a_igndlq.jpg',
     description: 'Marta, Nuff said',
