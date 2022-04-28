@@ -5,9 +5,12 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  title: String,
-  crypto: Array,
-  nft: Array,
+  fName: String,
+  lName: String,
+  email: String,
+  user: Boolean,
+  admin: Boolean,
+  visits: Number,
 });
 
 const USER = mongoose.model('user', userSchema);
