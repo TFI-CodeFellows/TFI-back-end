@@ -8,13 +8,7 @@ const wallet = require('./models/wallet');
 
 const watchSeed = async () => {
   await wallet.create({
-    title: 'Bob',
-    type: 'Portrait',
-    imageURL:'https://res.cloudinary.com/tfi/image/upload/v1650511822/Bob_s8nkry.png',
-    description:'Art peice created between students in a time of absolute desperation!',
-    price: 48,
-    Ratings: 4.6,
-    email: 'dcmusic01@gmail.com',
+    
   });
 
   mongoose.disconnect();

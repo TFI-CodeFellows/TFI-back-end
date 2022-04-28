@@ -1,7 +1,7 @@
 {
   "name": "tfi-back-end",
   "version": "1.0.0",
-  "description": "Back end application for sending data using a MongoDB and Mongoose.",
+  "description": "Back end application for sending data using MongoDB and Mongoose.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

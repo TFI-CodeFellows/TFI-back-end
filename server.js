@@ -12,7 +12,7 @@ const upload = multer({ storage });
 //Auth0
 const verifyUser = require('./auth.js');
 
-//App using express & JSON
+//App using express & JSON & ENV Variables
 const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(cors());
@@ -268,7 +268,6 @@ async function handleGetUserProfile(req, res) {
         email: email,
         user: true,
         visits: visitNum,
-        admin: false
       }
       const updateUSER = await USER.findByIdAndUpdate(_id, userData, {
         new: true,
@@ -304,4 +303,4 @@ async function handleDeleteUser(req, res) {
     res.status(500).send(error.message);
   });
 
-  app.listen(PORT, () => console.log(`listening on ${PORT}`));
+  app.listen(PORT);
