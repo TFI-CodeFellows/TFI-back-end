@@ -32,6 +32,7 @@ const NFT = require('./models/nft');
 const WALLET = require('./models/wallet')
 const DEV = require('./models/dev');
 const CRYPTO = require('./models/crypto');
+const USER = require('./models/users');
 
 // Landing path
 app.get('/', handleGetAllnfts);
@@ -104,8 +105,9 @@ async function handleGetAllnfts(req, res) {
   }
 }
 async function handleGetUsernfts(req, res) {
+  const { email, fName, lName} = req.user
   try {
-    const nft = await NFT.find({ email: req.user.email });
+    const nft = await NFT.find({ email: email, fName: fName, lName: lName });
     res.status(200).send(nft);
   } catch (error) {
     console.error(error);
@@ -225,19 +227,68 @@ async function handlePostWallet(req, res) {
     res.status(400).send(error.message);
   }
 }
-// Get all users
-// app.get('/usersList', function(req, res) {
-//   User.find({}, function(err, users) {
-//     var userMap = {};
 
-//     users.forEach(function(user) {
-//       userMap[user._id] = user;
-//     });
+// ADMIN FUNCTIONALITY STRECH GOAL
+app.get('/usersList', handleGetUsers);
+app.get('/userProfile', handleGetUserProfile);
+app.delete('/deleteUser/:id', handleDeleteUser);
 
-//     res.send(userMap);  
-//   });
-// });
+async function handleGetUsers(req, res) {
+  try {
+    const users = await USER.find();
+    res.status(200).send(users);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send("Could not find nft's");
+  }
+}
 
+async function handleGetUserProfile(req, res) {
+  const { given_name, family_name, email } = req.user;
+  try{
+    const userProfile = await USER.find({email: email})
+    if(userProfile.length === 0){
+      const userData = {
+        fName: given_name,
+        lName: family_name,
+        email: email,
+        user: true,
+        visits: 1,
+        admin: false
+      }
+      const newUser =  await USER.create({...userData})
+      res.send(newUser);
+    }else{
+      let visitNum  = userProfile[0].visits;
+      const { _id } = userProfile[0];
+      visitNum++;
+      const userData = {
+        fName: given_name,
+        lName: family_name,
+        email: email,
+        user: true,
+        visits: visitNum,
+        admin: false
+      }
+      const updateUSER = await USER.findByIdAndUpdate(_id, userData, {
+        new: true,
+      });
+      res.status(204).send(userProfile);
+    }
+  }catch(error){
+    res.status(400).send(error.message);
+  }
+}
+
+async function handleDeleteUser(req, res) {
+  const { id } = req.params;
+  try {
+    const banUser = await USER.findByIdAndDelete(id);
+    res.send(banUser)
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
 
   //Landing page for testing purposes
   app.get('/', (req, res) => {
