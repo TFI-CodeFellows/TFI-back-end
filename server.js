@@ -165,6 +165,7 @@ async function handleGetUserCrypto(req, res) {
   }
 }
 async function handleCreateCrypto(req, res) {
+
   try {
     const findCoin = await CRYPTO.findOne({ ...req.body, email: req.user.email });
     if (!findCoin) {
@@ -177,10 +178,13 @@ async function handleCreateCrypto(req, res) {
 }
 async function handleDeleteCrypto(req, res) {
   const { id } = req.params;
+  console.log("deleting crypto")
   try {
     const coin = await CRYPTO.findOne({ _id: id });
+    console.log(coin);
     if (coin) {
       await CRYPTO.findByIdAndDelete(id);
+      console.log("crypto deleted");
       res.status(204).send('coins were succussfully deleted');
     }
   } catch (error) {
@@ -289,18 +293,19 @@ async function handleDeleteUser(req, res) {
   }
 }
 
-  //Landing page for testing purposes
-  app.get('/', (req, res) => {
-    res.send('We Are Working!!!');
-  });
+//Landing page for testing purposes
+app.get('/', (req, res) => {
+  res.send('We Are Working!!!');
+});
 
-  app.get('*', (req, res) => {
-    res.send('Page not found');
-  });
+app.get('*', (req, res) => {
+  res.send('Page not found');
+});
 
-  //Error Handling
-  app.use((error, req, res, next) => {
-    res.status(500).send(error.message);
-  });
+//Error Handling
+app.use((error, req, res, next) => {
+  res.status(500).send(error.message);
+});
+
 
   app.listen(PORT);
