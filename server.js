@@ -1,6 +1,5 @@
 'use strict';
-
-// hello Bob's world
+// DOTENV Config
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -9,9 +8,11 @@ const cors = require('cors');
 const multer = require('multer');
 const { storage } = require('./cloudinary');
 const upload = multer({ storage });
+
 //Auth0
 const verifyUser = require('./auth.js');
 
+//App using express & JSON
 const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(cors());
@@ -20,26 +21,40 @@ app.use(express.json());
 //MongoDB
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL);
-const NFT = require('./models/nft');
-const DEV = require('./models/dev');
-const Crypto = require('./models/crypto');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('Mongoose is connected');
 });
 
-// Paths
+//Models for MongoDB
+const NFT = require('./models/nft');
+const WALLET = require('./models/wallet')
+const DEV = require('./models/dev');
+const CRYPTO = require('./models/crypto');
+
+// Landing path
 app.get('/', handleGetAllnfts);
 app.get('/dev', handelgetAllDevs);
-// Do not move line 35 <*>
+
+// Do not move line this line below <*>
 app.use(verifyUser);
+
+//Wallet paths
+app.get('/wallet', handleGetUserWallet);
+app.delete('/wallet/:id', handleDeleteUserWallet);
+app.post('/wallet', handlePostWallet);
+
+
+// dev Paths
 app.get('/userDev', handleGetUserDev);
+app.put('/dev/:id', handleUpdateDev);
+
+//NFT Paths
 app.get('/nft', handleGetUsernfts);
 app.put('/nft/:id', handleUpdateNft);
 app.post('/nft', upload.single('image'), handleCreateNft);
 app.delete('/nft/:id', handleDeleteNft);
-app.put('/dev/:id', handleUpdateDev);
 app.put('/nft/:id', handleUpdateNft);
 
 // Crypto Path
@@ -47,7 +62,7 @@ app.get('/crypto', handleGetUserCrypto);
 app.post('/crypto', handleCreateCrypto);
 app.delete('/crypto/:id', handleDeleteCrypto);
 
-//Dev Information
+//Dev Functions
 async function handelgetAllDevs(req, res) {
   try {
     const dev = await DEV.find();
@@ -67,21 +82,18 @@ async function handleGetUserDev(req, res) {
   }
 }
 async function handleUpdateDev(req, res) {
-  console.log('we made it here');
   try {
     const result = await DEV.findOneAndUpdate(
       { _id: req.params.id, email: req.user.email },
       req.body
     );
-    console.log('Dev is golden');
     res.status('200').send(result);
   } catch (error) {
-    console.log(req.body);
     next(error.message);
   }
 }
 
-// functions for NFT
+// NFT Functions
 async function handleGetAllnfts(req, res) {
   try {
     const nft = await NFT.find();
@@ -118,13 +130,10 @@ async function handleCreateNft(req, res) {
     res.status(400).send('Error');
   }
 }
-
 async function handleDeleteNft(req, res, next) {
   const { id } = req.params;
-  console.log("deleting");
   try {
     const nft = await NFT.findOne({ _id: id, email: req.user.email })
-    console.log("found deleting");
     if (nft) {
       await NFT.findByIdAndDelete({ _id: id })
         .then(() => res.status('200').send('NFT was deleted'));
@@ -133,19 +142,6 @@ async function handleDeleteNft(req, res, next) {
     next(error.message);
   }
 }
-
-async function handleUpdateNft(req, res, next) {
-  try {
-    const result = await NFT.findOneAndUpdate(
-      { _id: req.params.id, email: req.user.email },
-      req.body
-    );
-    res.status('200').send(result);
-  } catch (error) {
-    next(error.message);
-  }
-}
-
 async function handleUpdateNft(req, res) {
   try {
     const updateNFT = await NFT.findByIdAndUpdate(req.params.id, req.body, {
@@ -157,38 +153,36 @@ async function handleUpdateNft(req, res) {
   }
 }
 
-//Functions for Crypto
-
+//Crypto Functions
 async function handleGetUserCrypto(req, res) {
   try {
-    const coins = await Crypto.find({ email: req.user.email });
+    const coins = await CRYPTO.find({ email: req.user.email });
     res.status(200).send(coins);
   } catch (error) {
     res.status(400).send('Could not find coins');
   }
 }
-
 async function handleCreateCrypto(req, res) {
-  const { coinName } = req.body
+
   try {
-    const findCoin = await Crypto.findOne({ ...req.body, email: req.user.email });
+    const findCoin = await CRYPTO.findOne({ ...req.body, email: req.user.email });
     if (!findCoin) {
-      const coin = await Crypto.create({ ...req.body, email: req.user.email });
+      const coin = await CRYPTO.create({ ...req.body, email: req.user.email });
     }
     res.status(204).send("coins were succussfully added");
   } catch (error) {
     res.status(400).send(error.message);
   }
 }
-
 async function handleDeleteCrypto(req, res) {
   const { id } = req.params;
+  console.log("deleting crypto")
   try {
-    const coin = await Crypto.findOne({ _id: id });
-    console.log(coin)
-    console.log("Found crypto");
+    const coin = await CRYPTO.findOne({ _id: id });
+    console.log(coin);
     if (coin) {
-      await Crypto.findByIdAndDelete(id);
+      await CRYPTO.findByIdAndDelete(id);
+      console.log("crypto deleted");
       res.status(204).send('coins were succussfully deleted');
     }
   } catch (error) {
@@ -198,12 +192,56 @@ async function handleDeleteCrypto(req, res) {
 
 async function handleCreateCrypto(req, res) {
   try {
-    const coins = await Crypto.create({ ...req.body, email: req.user.email });
+    const coins = await CRYPTO.create({ ...req.body, email: req.user.email });
     res.status(204).send('coins were succussfully added');
   } catch (error) {
     res.status(400).send(error.message);
   }
 }
+
+// Functions for Wallet
+async function handleGetUserWallet(req, res) {
+  try {
+    const wallet = await WALLET.find({ email: req.user.email });
+    res.status(200).send(wallet);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Could not find user wallet Information');
+  }
+}
+async function handleDeleteUserWallet(req, res) {
+  const { id } = req.params;
+  try {
+    const wallet = await WALLET.findByIdAndDelete(id);
+    res.send(wallet)
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+async function handlePostWallet(req, res) {
+  try {
+    const findWallet = await WALLET.findOne({ ...req.body, email: req.user.email });
+    if (!findWallet) {
+      const wallet = await WALLET.create({ ...req.body, email: req.user.email });
+    }
+    res.status(204).send('Created item in Wallet');
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+// Get all users
+// app.get('/usersList', function(req, res) {
+//   User.find({}, function(err, users) {
+//     var userMap = {};
+
+//     users.forEach(function(user) {
+//       userMap[user._id] = user;
+//     });
+
+//     res.send(userMap);  
+//   });
+// });
+
 
 //Landing page for testing purposes
 app.get('/', (req, res) => {

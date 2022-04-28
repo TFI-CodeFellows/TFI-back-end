@@ -7,11 +7,15 @@ mongoose.connect(process.env.DATABASE_URL);
 const nft = require('./models/nft.js');
 const crypto = require('./models/crypto.js');
 const dev = require('./models/dev.js');
+const WALLET = require('./models/wallet.js');
+const USER = require('./models/users.js');
 
 const clearDatabase = async () => {
-  await nft.deleteMany({});
+  await nft.deleteMany({})
   await crypto.deleteMany({})
   await dev.deleteMany({})
-    .then(() => console.log('deleted all items in the database!'));
+  await WALLET.deleteMany({})
+  await USER.deleteMany({})
+  .then(() => console.log('deleted all items in the database!'));
 };
 clearDatabase();

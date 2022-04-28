@@ -6,17 +6,16 @@ mongoose.connect(process.env.DATABASE_URL);
 
 const dev = require('./models/dev');
 
-const seed = async () => {
+const devSeed = async () => {
   await dev.create({
     name: 'Hugo Thompson',
     bio: " Hi, I'm Hugo Thompson, I'm a Software Engineer. I started my coding journey about halfway through high school, where I found a game that had a repository anyone could contribute to. I thought the idea of that was really cool and so I self learned a bit of the language to contribute myself. It was super fun to deliver new features, patch bugs, and rework mechanics for players and get fun positive feedback! This continued until I graduated, and while originally I was going to go ahead into college… both my enjoyment of coding and covid hitting at a real nasty time made me decide to instead continue my self learning instead of dealing with online college classes at full price. I self learned some more for about two years, branched out a little bit into python and a bit of typescript for interest, but I still felt a little unsure about fully lacking any kind of formal education, so instead I joined code fellows to become a proper software developer. I'm currently learning there to fill in the holes, learn the industry, and build connections!",
-    imageURL:
-      'https://res.cloudinary.com/software-developer/image/upload/v1650823210/Hugo1_qa02jr.jpg',
-
+    imageURL:'https://res.cloudinary.com/software-developer/image/upload/v1650823210/Hugo1_qa02jr.jpg',
     email: 'bazelart13@gmail.com@gmail.com',
     github: 'https://github.com/laptopadventure',
     linkedIn: 'https://www.linkedin.com/in/hugo-thompson-laptopadventure/',
     role: 'Lead Frontend Developer',
+    admin: true,
   });
 
   await dev.create({
@@ -29,6 +28,7 @@ const seed = async () => {
     github: 'https://github.com/denekm',
     linkedIn: 'https://www.linkedin.com/in/marta-deneke/',
     role: 'Product Owner',
+    admin: true,
   });
 
   await dev.create({
@@ -37,21 +37,22 @@ const seed = async () => {
     imageURL:
       'https://res.cloudinary.com/software-developer/image/upload/v1650823209/danny_g4umfm.jpg',
 
-    email: 'mrtdenneke@gmail.com',
+    email: 'dcastro01@gmail.com',
     github: 'https://github.com/Dcastro99',
     linkedIn: 'https://www.linkedin.com/in/dcastro99/',
     role: 'Lead Data Engineer',
+    admin: true,
   });
 
   await dev.create({
     name: 'Cesar Deltoro',
     bio: `Hello, I'm Cesar Deltoro a Software Engineer based out of Seattle, WA. My journey into tech began in 2020 and I have been able to build applications with other developers throughout the last 2 years. I am always looking to learn new skills to sharpen my technical abilities, and focused on growth with an inclusive company of which I can develop user friendly applications.`,
-    imageUrl:
-      'https://res.cloudinary.com/software-developer/image/upload/v1650823279/IMG_1591_csgc7r.jpg',
+    imageUrl:`https://res.cloudinary.com/software-developer/image/upload/v1650823279/IMG_1591_csgc7r.jpg`,
     github: 'https://github.com/cesardeltoroc',
     linkedIn: 'https://www.linkedin.com/in/cesardeltoroc/',
-    email: 'cesardeltoroc@icloud.com',
+    email: 'cesardeltorojr@gmail.com',
     role: 'Lead Backend Developer',
+    admin: true,
   });
 
   await dev.create({
@@ -62,8 +63,9 @@ const seed = async () => {
     linkedin: 'https://www.linkedin.com/in/jpescandor/',
     email: 'jaypesc@gmail.com',
     role: 'Project Manager',
+    admin: true,
   });
 
   mongoose.disconnect();
 };
-seed();
+devSeed();
